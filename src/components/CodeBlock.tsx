@@ -9,7 +9,7 @@ interface CodeBlockProps {
   filename?: string
 }
 
-export function CodeBlock({ code, language = 'typescript', filename }: CodeBlockProps) {
+export function CodeBlock({ code, filename }: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
 
   const copyToClipboard = async () => {

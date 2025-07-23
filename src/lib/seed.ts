@@ -15,7 +15,7 @@ export async function seedDatabase() {
       },
     })
 
-    const categories = await prisma.category.createMany({
+    await prisma.category.createMany({
       data: [
         {
           name: 'Work',

@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     const categoryId = searchParams.get('categoryId')
     const priority = searchParams.get('priority')
 
-    const where: any = {}
+    const where: Record<string, string | boolean> = {}
     if (completed !== null) {
       where.completed = completed === 'true'
     }

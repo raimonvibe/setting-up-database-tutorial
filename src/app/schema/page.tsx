@@ -1,5 +1,5 @@
 import { CodeBlock } from '@/components/CodeBlock'
-import { Database, Users, Tag, CheckSquare, ArrowRight } from 'lucide-react'
+import { Users, Tag, CheckSquare } from 'lucide-react'
 
 export default function SchemaPage() {
   return (
@@ -8,20 +8,20 @@ export default function SchemaPage() {
         <h1>Database Schema Design</h1>
         <p>
           The database schema is the blueprint of your database. It defines the structure of your data, 
-          including tables, columns, relationships, and constraints. In this section, we'll design a 
+          including tables, columns, relationships, and constraints. In this section, we&apos;ll design a 
           comprehensive schema for a task management application.
         </p>
 
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-8">
           <h3 className="text-blue-800 dark:text-blue-200 mb-2">What is Prisma Schema?</h3>
           <p className="text-blue-700 dark:text-blue-300">
-            Prisma schema is a declarative way to define your database structure. It's written in a 
+            Prisma schema is a declarative way to define your database structure. It&apos;s written in a 
             special syntax that Prisma uses to generate the database client and manage migrations.
           </p>
         </div>
 
         <h2>Our Task Management Schema</h2>
-        <p>Let's build a complete schema for a task management application with three main entities:</p>
+        <p>Let&apos;s build a complete schema for a task management application with three main entities:</p>
 
         <div className="grid md:grid-cols-3 gap-4 mb-8">
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
@@ -185,7 +185,7 @@ category   Category? @relation(fields: [categoryId], references: [id], onDelete:
         <h3>Delete Behaviors</h3>
         <ul>
           <li><code>Cascade</code> - When a user is deleted, all their tasks are also deleted</li>
-          <li><code>SetNull</code> - When a category is deleted, tasks' categoryId becomes null</li>
+          <li><code>SetNull</code> - When a category is deleted, tasks&apos; categoryId becomes null</li>
         </ul>
 
         <h2>Generating the Database</h2>

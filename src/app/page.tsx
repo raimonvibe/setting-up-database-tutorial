@@ -105,7 +105,7 @@ export default function Home() {
       </div>
 
       <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">What You'll Learn</h2>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">What You&apos;ll Learn</h2>
         <div className="grid md:grid-cols-2 gap-6">
           <ul className="space-y-3">
             <li className="flex items-start">
