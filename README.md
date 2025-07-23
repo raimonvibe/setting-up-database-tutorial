@@ -1,3 +1,10 @@
+## 🌐 Live Demo
+**[🚀 Visit Setting up Database tutorial](https://setting-up-database-tutorial.vercel.app/)**
+
+![Setting up Database tutorial](./database.png)
+
+# Setting Up Database Tutorial
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
