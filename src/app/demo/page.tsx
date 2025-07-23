@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Plus, Edit, Trash2, Check, X, Calendar, User, Tag, Play } from 'lucide-react'
 
 interface Task {
@@ -56,12 +56,11 @@ export default function DemoPage() {
   const [loading, setLoading] = useState(true)
   const [showTaskForm, setShowTaskForm] = useState(false)
   const [showCategoryForm, setShowCategoryForm] = useState(false)
-  const [editingTask, setEditingTask] = useState<Task | null>(null)
 
   const [taskForm, setTaskForm] = useState({
     title: '',
     description: '',
-    priority: 'MEDIUM' as const,
+    priority: 'MEDIUM' as 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT',
     dueDate: '',
     userId: '',
     categoryId: '',
@@ -73,11 +72,7 @@ export default function DemoPage() {
     color: '#3B82F6',
   })
 
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true)
       const [tasksRes, categoriesRes, usersRes] = await Promise.all([
@@ -92,9 +87,9 @@ export default function DemoPage() {
         usersRes.json(),
       ])
 
-      setTasks(tasksData)
-      setCategories(categoriesData)
-      setUsers(usersData)
+      setTasks(Array.isArray(tasksData) ? tasksData : [])
+      setCategories(Array.isArray(categoriesData) ? categoriesData : [])
+      setUsers(Array.isArray(usersData) ? usersData : [])
 
       if (usersData.length > 0 && !taskForm.userId) {
         setTaskForm(prev => ({ ...prev, userId: usersData[0].id }))
@@ -104,7 +99,12 @@ export default function DemoPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [taskForm.userId])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
+
 
   const createTask = async () => {
     try {
@@ -145,7 +145,6 @@ export default function DemoPage() {
 
       if (response.ok) {
         await fetchData()
-        setEditingTask(null)
       }
     } catch (error) {
       console.error('Error updating task:', error)
@@ -326,8 +325,9 @@ export default function DemoPage() {
                         
                         <div className="flex items-center space-x-2">
                           <button
-                            onClick={() => setEditingTask(task)}
+                            onClick={() => {}}
                             className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
+                            disabled
                           >
                             <Edit className="h-4 w-4" />
                           </button>
@@ -463,7 +463,7 @@ export default function DemoPage() {
                   </label>
                   <select
                     value={taskForm.priority}
-                    onChange={(e) => setTaskForm(prev => ({ ...prev, priority: e.target.value as any }))}
+                    onChange={(e) => setTaskForm(prev => ({ ...prev, priority: e.target.value as 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT' }))}
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   >
                     <option value="LOW">Low</option>

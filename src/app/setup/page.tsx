@@ -7,8 +7,8 @@ export default function SetupPage() {
       <div className="prose max-w-none">
         <h1>Environment Setup</h1>
         <p>
-          In this section, we'll set up everything you need to start working with databases in Next.js. 
-          We'll use Prisma as our ORM (Object-Relational Mapping) tool and SQLite as our database for simplicity.
+          In this section, we&apos;ll set up everything you need to start working with databases in Next.js. 
+          We&apos;ll use Prisma as our ORM (Object-Relational Mapping) tool and SQLite as our database for simplicity.
         </p>
 
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-8">
@@ -40,7 +40,7 @@ export default function SetupPage() {
         </div>
 
         <h2>Step 1: Create a New Next.js Project</h2>
-        <p>First, let's create a new Next.js project with TypeScript and Tailwind CSS:</p>
+        <p>First, let&apos;s create a new Next.js project with TypeScript and Tailwind CSS:</p>
         
         <CodeBlock
           code={`npx create-next-app@latest my-database-app --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
@@ -105,7 +105,7 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma`}
         </div>
 
         <h2>Step 6: Install Additional Dependencies</h2>
-        <p>For this tutorial, we'll also use Lucide React for icons:</p>
+        <p>For this tutorial, we&apos;ll also use Lucide React for icons:</p>
         
         <CodeBlock
           code={`npm install lucide-react`}
@@ -113,7 +113,7 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma`}
         />
 
         <h2>Verification</h2>
-        <p>Let's verify everything is set up correctly. Your project structure should look like this:</p>
+        <p>Let&apos;s verify everything is set up correctly. Your project structure should look like this:</p>
         
         <CodeBlock
           code={`my-database-app/
@@ -139,7 +139,7 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma`}
           </div>
           <p className="text-green-700 dark:text-green-300">
             You now have a Next.js project with Prisma configured and ready to use. 
-            In the next section, we'll design our database schema.
+            In the next section, we&apos;ll design our database schema.
           </p>
         </div>
 

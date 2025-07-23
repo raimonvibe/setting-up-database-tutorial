@@ -33,13 +33,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme(prev => prev === 'light' ? 'dark' : 'light')
   }
 
-  if (!mounted) {
-    return <div className="min-h-screen bg-background">{children}</div>
-  }
-
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+      {!mounted ? (
+        <div className="min-h-screen bg-background">{children}</div>
+      ) : (
+        children
+      )}
     </ThemeContext.Provider>
   )
 }
