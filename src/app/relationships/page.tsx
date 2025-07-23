@@ -72,7 +72,36 @@ export default function RelationshipsPage() {
         </p>
 
         <CodeBlock
-          code="model User &#123;\n  id        String   @id @default(cuid())\n  email     String   @unique\n  name      String?\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  \n  tasks     Task[]\n  \n  @@map(&quot;users&quot;)\n&#125;\n\nmodel Task &#123;\n  id          String    @id @default(cuid())\n  title       String\n  description String?\n  completed   Boolean   @default(false)\n  priority    Priority  @default(MEDIUM)\n  dueDate     DateTime?\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n  \n  userId      String\n  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  \n  categoryId  String?\n  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)\n  \n  @@map(&quot;tasks&quot;)\n&#125;"
+          code={`model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  tasks     Task[]
+  
+  @@map("users")
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  completed   Boolean   @default(false)
+  priority    Priority  @default(MEDIUM)
+  dueDate     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  
+  @@map("tasks")
+}`}
           filename="prisma/schema.prisma"
         />
 
@@ -95,7 +124,22 @@ export default function RelationshipsPage() {
         </p>
 
         <CodeBlock
-          code="model Category &#123;\n  id          String   @id @default(cuid())\n  name        String   @unique\n  description String?\n  color       String   @default(&quot;#3B82F6&quot;)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  \n  tasks       Task[]\n  \n  @@map(&quot;categories&quot;)\n&#125;\n\ncategoryId  String?     // Optional foreign key (nullable)\ncategory    Category?   // Optional relation (nullable)\n            @relation(fields: [categoryId], references: [id], onDelete: SetNull)"
+          code={`model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  color       String   @default("#3B82F6")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  tasks       Task[]
+  
+  @@map("categories")
+}
+
+categoryId  String?     // Optional foreign key (nullable)
+category    Category?   // Optional relation (nullable)
+            @relation(fields: [categoryId], references: [id], onDelete: SetNull)`}
           filename="prisma/schema.prisma"
         />
 
@@ -140,7 +184,7 @@ export default function RelationshipsPage() {
         <p>Use the <code>include</code> option to fetch related data in your queries:</p>
 
         <CodeBlock
-          code="// Fetch tasks with user and category information\nconst tasks = await prisma.task.findMany(&#123;\n  include: &#123;\n    user: &#123;\n      select: &#123;\n        id: true,\n        name: true,\n        email: true,\n      &#125;,\n    &#125;,\n    category: &#123;\n      select: &#123;\n        id: true,\n        name: true,\n        color: true,\n      &#125;,\n    &#125;,\n  &#125;,\n  orderBy: &#123;\n    createdAt: &apos;desc&apos;,\n  &#125;,\n&#125;)"
+          code="// Fetch tasks with user and category information\nconst tasks = await prisma.task.findMany({\n  include: {\n    user: {\n      select: {\n        id: true,\n        name: true,\n        email: true,\n      },\n    },\n    category: {\n      select: {\n        id: true,\n        name: true,\n        color: true,\n      },\n    },\n  },\n  orderBy: {\n    createdAt: 'desc',\n  },\n})"
         />
 
         <h3>Selecting Specific Fields</h3>
@@ -161,36 +205,159 @@ export default function RelationshipsPage() {
         <p>You can filter records based on their relationships:</p>
 
         <CodeBlock
-          code="// Get all tasks for a specific user\nconst userTasks = await prisma.task.findMany(&#123;\n  where: &#123;\n    userId: &quot;specific-user-id&quot;,\n  &#125;,\n  include: &#123;\n    category: true,\n  &#125;,\n&#125;)\n\nconst categoryTasks = await prisma.task.findMany(&#123;\n  where: &#123;\n    categoryId: &quot;specific-category-id&quot;,\n  &#125;,\n  include: &#123;\n    user: &#123;\n      select: &#123;\n        name: true,\n        email: true,\n      &#125;,\n    &#125;,\n  &#125;,\n&#125;)\n\nconst usersWithIncompleteTasks = await prisma.user.findMany(&#123;\n  where: &#123;\n    tasks: &#123;\n      some: &#123;\n        completed: false,\n      &#125;,\n    &#125;,\n  &#125;,\n  include: &#123;\n    _count: &#123;\n      select: &#123;\n        tasks: true,\n      &#125;,\n    &#125;,\n  &#125;,\n&#125;)"
+          code={`// Get all tasks for a specific user
+const userTasks = await prisma.task.findMany({
+  where: {
+    userId: "specific-user-id",
+  },
+  include: {
+    category: true,
+  },
+})
+
+const categoryTasks = await prisma.task.findMany({
+  where: {
+    categoryId: "specific-category-id",
+  },
+  include: {
+    user: {
+      select: {
+        name: true,
+        email: true,
+      },
+    },
+  },
+})
+
+const usersWithIncompleteTasks = await prisma.user.findMany({
+  where: {
+    tasks: {
+      some: {
+        completed: false,
+      },
+    },
+  },
+  include: {
+    _count: {
+      select: {
+        tasks: true,
+      },
+    },
+  },
+})`}
         />
 
         <h2>Creating Records with Relationships</h2>
 
         <h3>Method 1: Using Foreign Keys</h3>
         <CodeBlock
-          code="// Create a task by providing the userId&#10;const task = await prisma.task.create(&#123;&#10;  data: &#123;&#10;    title: &#34;New task&#34;,&#10;    description: &#34;Task description&#34;,&#10;    userId: &#34;existing-user-id&#34;,&#10;    categoryId: &#34;existing-category-id&#34;, // Optional&#10;  &#125;,&#10;  include: &#123;&#10;    user: true,&#10;    category: true,&#10;  &#125;,&#10;&#125;)"
+          code={`// Create a task by providing the userId
+const task = await prisma.task.create({
+  data: {
+    title: "New task",
+    description: "Task description",
+    userId: "existing-user-id",
+    categoryId: "existing-category-id", // Optional
+  },
+  include: {
+    user: true,
+    category: true,
+  },
+})`}
         />
 
         <h3>Method 2: Using Nested Creates</h3>
         <CodeBlock
-          code="// Create a user and their first task in one operation&#10;const userWithTask = await prisma.user.create(&#123;&#10;  data: &#123;&#10;    email: &#34;newuser@example.com&#34;,&#10;    name: &#34;New User&#34;,&#10;    tasks: &#123;&#10;      create: [&#10;        &#123;&#10;          title: &#34;First task&#34;,&#10;          description: &#34;Getting started&#34;,&#10;          priority: &#34;HIGH&#34;,&#10;        &#125;,&#10;      ],&#10;    &#125;,&#10;  &#125;,&#10;  include: &#123;&#10;    tasks: true,&#10;  &#125;,&#10;&#125;)"
+          code={`// Create a user and their first task in one operation
+const userWithTask = await prisma.user.create({
+  data: {
+    email: "newuser@example.com",
+    name: "New User",
+    tasks: {
+      create: [
+        {
+          title: "First task",
+          description: "Getting started",
+          priority: "HIGH",
+        },
+      ],
+    },
+  },
+  include: {
+    tasks: true,
+  },
+})`}
         />
 
         <h3>Method 3: Connecting Existing Records</h3>
         <CodeBlock
-          code="// Create a task and connect it to existing user and category&#10;const task = await prisma.task.create(&#123;&#10;  data: &#123;&#10;    title: &#34;Connected task&#34;,&#10;    user: &#123;&#10;      connect: &#123;&#10;        id: &#34;existing-user-id&#34;,&#10;      &#125;,&#10;    &#125;,&#10;    category: &#123;&#10;      connect: &#123;&#10;        id: &#34;existing-category-id&#34;,&#10;      &#125;,&#10;    &#125;,&#10;  &#125;,&#10;  include: &#123;&#10;    user: true,&#10;    category: true,&#10;  &#125;,&#10;&#125;)"
+          code={`// Create a task and connect it to existing user and category
+const task = await prisma.task.create({
+  data: {
+    title: "Connected task",
+    user: {
+      connect: {
+        id: "existing-user-id",
+      },
+    },
+    category: {
+      connect: {
+        id: "existing-category-id",
+      },
+    },
+  },
+  include: {
+    user: true,
+    category: true,
+  },
+})`}
         />
 
         <h2>Advanced Relationship Patterns</h2>
 
         <h3>Nested Filtering</h3>
         <CodeBlock
-          code="// Get categories that have high-priority tasks&#10;const categoriesWithHighPriorityTasks = await prisma.category.findMany(&#123;&#10;  where: &#123;&#10;    tasks: &#123;&#10;      some: &#123;&#10;        priority: &#34;HIGH&#34;,&#10;      &#125;,&#10;    &#125;,&#10;  &#125;,&#10;  include: &#123;&#10;    tasks: &#123;&#10;      where: &#123;&#10;        priority: &#34;HIGH&#34;,&#10;      &#125;,&#10;    &#125;,&#10;    _count: &#123;&#10;      select: &#123;&#10;        tasks: true,&#10;      &#125;,&#10;    &#125;,&#10;  &#125;,&#10;&#125;)"
+          code={`// Get categories that have high-priority tasks
+const categoriesWithHighPriorityTasks = await prisma.category.findMany({
+  where: {
+    tasks: {
+      some: {
+        priority: "HIGH",
+      },
+    },
+  },
+  include: {
+    tasks: {
+      where: {
+        priority: "HIGH",
+      },
+    },
+    _count: {
+      select: {
+        tasks: true,
+      },
+    },
+  },
+})`}
         />
 
         <h3>Ordering by Related Fields</h3>
         <CodeBlock
-          code="// Get tasks ordered by user name\nconst tasks = await prisma.task.findMany(&#123;\n  include: &#123;\n    user: &#123;\n      select: &#123;\n        name: true,\n      &#125;,\n    &#125;,\n  &#125;,\n  orderBy: &#123;\n    user: &#123;\n      name: &apos;asc&apos;,\n    &#125;,\n  &#125;,\n&#125;)"
+          code={`// Get tasks ordered by user name
+const tasks = await prisma.task.findMany({
+  include: {
+    user: {
+      select: {
+        name: true,
+      },
+    },
+  },
+  orderBy: {
+    user: {
+      name: 'asc',
+    },
+  },
+})`}
         />
 
         <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6 mb-8">
