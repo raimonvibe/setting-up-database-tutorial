@@ -56,6 +56,7 @@ export default function DemoPage() {
   const [loading, setLoading] = useState(true)
   const [showTaskForm, setShowTaskForm] = useState(false)
   const [showCategoryForm, setShowCategoryForm] = useState(false)
+  const [usersLoaded, setUsersLoaded] = useState(false)
 
   const [taskForm, setTaskForm] = useState({
     title: '',
@@ -102,12 +103,20 @@ export default function DemoPage() {
   }, [taskForm.userId])
 
   useEffect(() => {
-    fetchData()
+    fetchData().then(() => {
+      if (users.length > 0) {
+        setTaskForm(prev => ({ ...prev, userId: users[0].id }))
+      }
+      setUsersLoaded(true)
+    })
   }, [fetchData])
-
 
   const createTask = async () => {
     try {
+      if (!taskForm.title || !taskForm.userId) {
+        console.error('Title and userId are required')
+        return
+      }
       const response = await fetch('/api/tasks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -514,7 +523,7 @@ export default function DemoPage() {
               </button>
               <button
                 onClick={createTask}
-                disabled={!taskForm.title}
+                disabled={!taskForm.title || !taskForm.userId || !usersLoaded}
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-md transition-colors"
               >
                 Create Task
