@@ -1,35 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --background: #ffffff; /* Light theme background */
+  --foreground: #171717; /* Light theme text */
+  --primary: #2563eb; /* Light theme button/icon color */
+  --font-geist-sans: 'Geist', sans-serif;
+  --font-geist-mono: 'Geist Mono', monospace;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #0a0a0a; /* Dark theme background */
+  --foreground: #ededed; /* Dark theme text */
+  --primary: #60a5fa; /* Dark theme button/icon color */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-geist-sans);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.bg-background {
+  background-color: var(--background);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+/* Prose styles */
 .prose {
   max-width: none;
 }
@@ -66,7 +66,7 @@ body {
   @apply border-l-4 border-blue-500 pl-4 italic text-gray-600 dark:text-gray-300 mb-4;
 }
 
-/* Footer Styles */
+/* Footer styles */
 .footer-raimon {
   @apply bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 py-12 mt-16;
 }
@@ -138,15 +138,6 @@ body {
 .sr-only {
   @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
   clip: rect(0, 0, 0, 0);
-}
-
-:root {
-  --font-geist-sans: 'Geist', sans-serif;
-  --font-geist-mono: 'Geist Mono', monospace;
-}
-
-body {
-  font-family: var(--font-geist-sans);
 }
 
 code, pre {
