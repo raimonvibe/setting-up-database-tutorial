@@ -19,6 +19,10 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans);
   transition: background-color 0.3s ease, color 0.3s ease;
+  /* Chrome-specific fixes */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .bg-background {
@@ -32,6 +36,39 @@ body {
 /* Prose styles */
 .prose {
   max-width: none;
+}
+
+/* Chrome-specific fixes for text colors */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .prose p,
+  .prose ul,
+  .prose ol,
+  .prose blockquote {
+    color: #1e3a8a !important; /* Force blue-900 in Chrome */
+  }
+  
+  .prose h1,
+  .prose h2,
+  .prose h3 {
+    color: #1e3a8a !important; /* Force blue-900 in Chrome */
+  }
+  
+  .prose code {
+    color: #1e3a8a !important; /* Force blue-900 in Chrome */
+  }
+  
+  /* Force blue text for all page elements in Chrome */
+  .text-blue-900 {
+    color: #1e3a8a !important;
+  }
+  
+  .text-blue-800 {
+    color: #1e40af !important;
+  }
+  
+  .text-blue-700 {
+    color: #1d4ed8 !important;
+  }
 }
 
 .prose h1 {
