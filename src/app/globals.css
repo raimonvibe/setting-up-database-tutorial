@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff; /* Light theme background */
+  --foreground: #171717; /* Light theme text */
+  --primary: #2563eb; /* Light theme button/icon color */
+  --font-geist-sans: 'Geist', sans-serif;
+  --font-geist-mono: 'Geist Mono', monospace;
+}
+
+.dark {
+  --background: #0a0a0a; /* Dark theme background */
+  --foreground: #ededed; /* Dark theme text */
+  --primary: #60a5fa; /* Dark theme button/icon color */
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bg-background {
+  background-color: var(--background);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+/* Prose styles */
+.prose {
+  max-width: none;
+}
+
+.prose h1 {
+  @apply text-3xl font-bold text-blue-900 dark:text-white mb-6;
+}
+
+.prose h2 {
+  @apply text-2xl font-semibold text-blue-900 dark:text-gray-100 mb-4 mt-8;
+}
+
+.prose h3 {
+  @apply text-xl font-medium text-blue-900 dark:text-gray-200 mb-3 mt-6;
+}
+
+.prose p {
+  @apply text-blue-900 dark:text-gray-300 mb-4 leading-relaxed;
+}
+
+.prose ul {
+  @apply list-disc list-inside text-blue-900 dark:text-gray-300 mb-4 space-y-2;
+}
+
+.prose ol {
+  @apply list-decimal list-inside text-blue-900 dark:text-gray-300 mb-4 space-y-2;
+}
+
+.prose code {
+  @apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono text-blue-900 dark:text-gray-100;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-blue-500 pl-4 italic text-blue-900 dark:text-gray-300 mb-4;
+}
+
+/* Footer styles */
+.footer-raimon {
+  @apply bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 py-12 mt-16;
+}
+
+.footer-raimon .container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.footer-raimon-content {
+  @apply text-center;
+}
+
+.footer-raimon-title {
+  @apply text-2xl font-bold text-gray-900 dark:text-white mb-8;
+}
+
+.social-grid {
+  @apply grid grid-cols-4 sm:grid-cols-8 gap-4 justify-center max-w-md mx-auto mb-8;
+  list-style: none;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.social-link {
+  @apply flex items-center justify-center w-12 h-12 rounded-full text-white transition-all duration-300 hover:scale-110 hover:shadow-lg;
+}
+
+.social-twitter {
+  @apply bg-black hover:bg-gray-800;
+}
+
+.social-youtube {
+  @apply bg-red-600 hover:bg-red-700;
+}
+
+.social-tiktok {
+  @apply bg-black hover:bg-gray-800;
+}
+
+.social-instagram {
+  @apply bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600;
+}
+
+.social-medium {
+  @apply bg-black hover:bg-gray-800;
+}
+
+.social-github {
+  @apply bg-gray-800 hover:bg-gray-900;
+}
+
+.social-linkedin {
+  @apply bg-blue-600 hover:bg-blue-700;
+}
+
+.social-facebook {
+  @apply bg-blue-600 hover:bg-blue-700;
+}
+
+.footer-copyright {
+  @apply text-blue-900 dark:text-gray-400;
+}
+
+.footer-copyright a {
+  @apply text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors;
+}
+
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  clip: rect(0, 0, 0, 0);
+}
+
+code, pre {
+  font-family: var(--font-geist-mono);
+}
