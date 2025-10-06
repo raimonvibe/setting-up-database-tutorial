@@ -15,6 +15,4 @@ services:
 
   - type: pserv
     name: database-tutorial-db
-    env: postgresql
     plan: free
-    ipAllowList: []
