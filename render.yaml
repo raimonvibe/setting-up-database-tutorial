@@ -13,7 +13,6 @@ services:
       - key: NODE_ENV
         value: production
 
-  - type: pserv
-    name: database-tutorial-db
+databases:
+  - name: database-tutorial-db
     plan: free
-    runtime: postgresql
